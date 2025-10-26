@@ -46,16 +46,16 @@ Install ```Python 3.10+``` (adds "```py```" and "```python```" to PATH).
 
 Create & activate a virtual env:
 
-- ```py -m venv .venv```
+- ```python -m venv .venv```
 
 - ```call .venv\Scripts\activate.bat```
 
 
 Install dependencies:
 
-- ```py -m pip install --upgrade pip```
+- ```python -m pip install --upgrade pip```
 
-- ```py -m pip install -r requirements.txt```
+- ```python -m pip install -r requirements.txt```
 
 
 Add the API keys:
@@ -72,8 +72,10 @@ Add the API keys:
 
 Run it:
 
-- interactive → ```py -m ioc_ranger```
-- non-interactive → ```py -m ioc_ranger --type mixed --input inputs\iocs_mixed.txt --out outputs\results --format table csv json```
+- interactive → ```python -m ioc_ranger```
+- non-interactive → ```python -m ioc_ranger --type mixed --input inputs\iocs_mixed.txt --out outputs\results --format table csv json```
 
+Need help?
 
+- ```python -m ioc_ranger --help```
 
