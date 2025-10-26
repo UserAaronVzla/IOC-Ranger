@@ -1,3 +1,4 @@
+from __future__ import annotations
 import httpx
 from typing import Optional, Tuple
 from ..ioc_types import HashResult
