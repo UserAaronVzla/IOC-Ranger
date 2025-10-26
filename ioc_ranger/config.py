@@ -1,14 +1,15 @@
-import os
 from dataclasses import dataclass
+from typing import Optional
 from dotenv import load_dotenv
+import os
 
-load_dotenv()  # loads .env in cwd
+load_dotenv()
 
 @dataclass
 class Settings:
-    vt_api_key: str | None
-    abuseipdb_key: str | None
-    ipqs_key: str | None
+    vt_api_key: Optional[str]
+    abuseipdb_key: Optional[str]
+    ipqs_key: Optional[str]
     cache_ttl: int
 
 def get_settings() -> Settings:
