@@ -1,5 +1,11 @@
 # IOC Ranger
-
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" /></a>
+  <img src="https://img.shields.io/badge/Python-3.9%2B-blue" />
+  <img src="https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-informational" />
+  <img src="https://img.shields.io/badge/Status-Active-brightgreen" />
+  <a href="#features"><img src="https://img.shields.io/badge/IOC-Ranger-CLI-purple" /></a>
+</p>
 A fast, colorful, and extensible IOC checker for **hashes, IPs, domains, and URLs**.
 
 - **VirusTotal**: file reputation, detections, and **code-signing** info  
