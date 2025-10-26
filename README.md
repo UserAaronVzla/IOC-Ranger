@@ -12,74 +12,80 @@ A fast, colorful, and extensible IOC checker for **hashes, IPs, domains, and URL
 - **AbuseIPDB**: IP abuse confidence, reports, last reported time  
 - **IPQualityScore**: IP/Domain/URL risk, **VPN/Proxy/TOR** flags, fraud score
 
+## Table of contents
+- [Features](#features)
+- [Quickstart](#quickstart)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [Examples](#examples)
+- [Roadmap](#roadmap)
+- [Social](#social)
+
+## Features
+- Interactive CLI with colorful banner (Rich)
+- Auto-classify: hashes • IPs • domains • URLs
+- VirusTotal (hash reputation & code-signing)
+- AbuseIPDB (abuse score, last reported)
+- IPQualityScore (risk + VPN/Proxy/TOR flags)
+- CSV/JSON tables, simple on-disk caching
+- Windows/macOS/Linux, no secrets committed (.env)
+
 
 ## Quickstart
 
-```bash
-python -m venv .venv
-# Windows: .venv\Scripts\activate
-# macOS/Linux:
-source .venv/bin/activate
-
-pip install -r requirements.txt
-cp .env.example .env   # add your keys
-
-python -m ioc_ranger \
-  --type mixed \
-  --input inputs/iocs_mixed.txt \
-  --out outputs/results \
-  --format table csv json
+### Windows (CMD)
+```bat
+git clone https://github.com/<you>/IOC-Ranger
+cd IOC-Ranger
+python -m venv .venv && call .venv\Scripts\activate.bat
+python -m pip install -r requirements.txt
+copy .env.example .env  &  notepad .env   :: fill keys
+python -m ioc_ranger -t mixed -i inputs\iocs_mixed.txt -f table
 ```
 
-# Inputs
+### macOS/Linux
+```bash
+git clone https://github.com/<you>/IOC-Ranger
+cd IOC-Ranger
+python -m venv .venv && source .venv/bin/activate
+python -m pip install -r requirements.txt
+cp .env.example .env && $EDITOR .env
+python -m ioc_ranger -t mixed -i inputs/iocs_mixed.txt -f table
+```
 
-One IOC per line, comments starting with ```#``` or ```//``` are ignored.
+## Usage
+```bash
+python -m ioc_ranger --help
+# Common:
+python -m ioc_ranger -t hashes -i inputs/hashes.txt -f table csv
+python -m ioc_ranger -t mixed  -i inputs/iocs_mixed.txt -o outputs/results -f table csv json
+```
 
-```--type``` can be ```hashes | ips | domains | urls | mixed``` (auto-classify each line).
+## Configuration
+```dotenv
+VT_API_KEY=...
+ABUSEIPDB_API_KEY=...
+IPQS_API_KEY=...
+CACHE_TTL=86400
+```
 
-# Outputs
+## Examples
+- **Hashes file** → show a real snippet of output table and a link to VT GUI from CSV.
+- **IPs file** → highlight AbuseIPDB score + IPQS VPN/Proxy flags.
+- **Mixed file** → show how types are auto-detected.
 
-```--format table csv json``` (may pass multiple).
+## Roadmap
+- [ ] Progress bar + ETA
+- [ ] JSONL & Markdown/HTML report exports
+- [ ] WHOIS + GeoIP enrichment
+- [ ] Delta mode (compare runs)
+- [ ] Windows EXE build (PyInstaller)
+- [ ] GitHub Actions (lint/test/build)
 
-Files are written under ```--out``` (default ```outputs/results``` → ```.csv/.json```).
-
-## Windows quick start (CMD)
-Install ```Python 3.10+``` (adds "```py```" and "```python```" to PATH).
-
-- Then: ```cd ioc-ranger```
-
-Create & activate a virtual env:
-
-- ```python -m venv .venv```
-
-- ```call .venv\Scripts\activate.bat```
-
-
-Install dependencies:
-
-- ```python -m pip install --upgrade pip```
-
-- ```python -m pip install -r requirements.txt```
-
-
-Add the API keys:
-
-- Edit ```.env``` and set: ```VT_API_KEY```, ```ABUSEIPDB_API_KEY```, ```IPQS_API_KEY```
-
-
-(Optional) Make sure folders exist on first run:
-
-- ```mkdir outputs 2>nul```
-
-- ```mkdir data 2>nul```
+## Social
+- 📧 A.eskenazicohen@gmail.com
+- 💼 [LinkedIn](linkedin.com/in/aaron-eskenazi-vzla)
+- 🐈‍⬛ [GitHub](https://github.com/UserAaronVzla)
 
 
-Run it:
-
-- interactive → ```python -m ioc_ranger```
-- non-interactive → ```python -m ioc_ranger --type mixed --input inputs\iocs_mixed.txt --out outputs\results --format table csv json```
-
-Need help?
-
-- ```python -m ioc_ranger --help```
 
