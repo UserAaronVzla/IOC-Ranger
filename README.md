@@ -24,19 +24,55 @@ python -m ioc_ranger \
   --format table csv json
 ```
 
-## Inputs
+# Inputs
 
 One IOC per line, comments starting with ```#``` or ```//``` are ignored.
 
 ```--type``` can be ```hashes | ips | domains | urls | mixed``` (auto-classify each line).
 
-## Outputs
+# Outputs
 
 ```--format table csv json``` (may pass multiple).
 
 Files are written under ```--out``` (default ```outputs/results``` → ```.csv/.json```).
 
+## Windows quick start (CMD)
+Install ```Python 3.10+``` (adds "```py```" and "```python```" to PATH).
 
+- Then: ```cd ioc-ranger```
+
+Create & activate a virtual env:
+
+- ```py -m venv .venv```
+
+- ```call .venv\Scripts\activate.bat```
+
+
+Install dependencies:
+
+- ```py -m pip install --upgrade pip```
+
+- ```py -m pip install -r requirements.txt```
+
+
+Add the API keys:
+
+- ```copy .env.example .env```
+
+- Edit ```.env``` and set: ```VT_API_KEY```, ```ABUSEIPDB_API_KEY```, ```IPQS_API_KEY```
+
+
+(Optional) Make sure folders exist on first run:
+
+- ```mkdir outputs 2>nul```
+
+- ```mkdir data 2>nul```
+
+
+Run it:
+
+- interactive → ```py -m ioc_ranger```
+- non-interactive → ```py -m ioc_ranger --type mixed --input inputs\iocs_mixed.txt --out outputs\results --format table csv json```
 
 
 
