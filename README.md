@@ -57,8 +57,6 @@ Install dependencies:
 
 Add the API keys:
 
-- ```copy .env.example .env```
-
 - Edit ```.env``` and set: ```VT_API_KEY```, ```ABUSEIPDB_API_KEY```, ```IPQS_API_KEY```
 
 
