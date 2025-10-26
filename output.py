@@ -1,3 +1,4 @@
+from __future__ import annotations
 from pathlib import Path
 from typing import Sequence
 import json
@@ -12,6 +13,7 @@ def print_table(rows: Sequence[MixedRow]) -> None:
     if not rows:
         console.print("[yellow]No results to display.[/yellow]")
         return
+
     tbl = Table(title="IOC Ranger results", show_lines=False, header_style="bold cyan")
     tbl.add_column("Type", style="magenta")
     tbl.add_column("IOC", style="white")
@@ -21,17 +23,34 @@ def print_table(rows: Sequence[MixedRow]) -> None:
         k = r.kind
         d = r.data
         if k == "hash":
-            summary = f"VT:{'Y' if getattr(d,'exists_on_vt',False) else 'N'} mal:{getattr(d,'malicious_vendors','-')} signed:{'Y' if getattr(d,'is_signed',False) else 'N'}"
+            summary = (
+                f"VT:{'Y' if getattr(d,'exists_on_vt',False) else 'N'}  "
+                f"mal:{getattr(d,'malicious_vendors','-')}  "
+                f"signed:{'Y' if getattr(d,'is_signed',False) else 'N'}"
+            )
             ioc = d.ioc
         elif k == "ip":
-            summary = f"Abuse:{getattr(d,'abuse_confidence','-')} IPQS:{getattr(d,'ipqs_fraud_score','-')} VPN:{bool(getattr(d,'is_vpn',False))} Proxy:{bool(getattr(d,'is_proxy',False))}"
+            summary = (
+                f"Abuse:{getattr(d,'abuse_confidence','-')}  "
+                f"IPQS:{getattr(d,'ipqs_fraud_score','-')}  "
+                f"VPN:{bool(getattr(d,'is_vpn',False))}  "
+                f"Proxy:{bool(getattr(d,'is_proxy',False))}"
+            )
             ioc = d.ioc
         elif k == "domain":
-            summary = f"Suspicious:{bool(getattr(d,'ipqs_suspicious',False))} Risk:{getattr(d,'ipqs_risk_score','-')}"
+            summary = (
+                f"Suspicious:{bool(getattr(d,'ipqs_suspicious',False))}  "
+                f"Risk:{getattr(d,'ipqs_risk_score','-')}"
+            )
             ioc = d.ioc
-        else:
-            summary = f"Suspicious:{bool(getattr(d,'ipqs_suspicious',False))} Risk:{getattr(d,'ipqs_risk_score','-')} Phishing:{bool(getattr(d,'phishing',False))}"
+        else:  # url
+            summary = (
+                f"Suspicious:{bool(getattr(d,'ipqs_suspicious',False))}  "
+                f"Risk:{getattr(d,'ipqs_risk_score','-')}  "
+                f"Phishing:{bool(getattr(d,'phishing',False))}"
+            )
             ioc = d.ioc
+
         tbl.add_row(k.upper(), ioc, summary)
 
     console.print(tbl)
@@ -41,9 +60,12 @@ def write_csv(rows: Sequence[MixedRow], base_path: str) -> Path:
     p.parent.mkdir(parents=True, exist_ok=True)
     with p.open("w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
-        w.writerow(["type","ioc","exists_on_vt","malicious_vendors","is_signed","signers","signature_valid",
-                    "abuse_confidence","total_reports","ipqs_fraud_score","is_proxy","is_vpn","is_tor",
-                    "ipqs_suspicious","ipqs_risk_score","phishing","malware","notes"])
+        w.writerow([
+            "type","ioc",
+            "exists_on_vt","malicious_vendors","is_signed","signers","signature_valid",
+            "abuse_confidence","total_reports","ipqs_fraud_score","is_proxy","is_vpn","is_tor",
+            "ipqs_suspicious","ipqs_risk_score","phishing","malware","notes"
+        ])
         for r in rows:
             d = r.data
             w.writerow([
@@ -71,10 +93,10 @@ def write_csv(rows: Sequence[MixedRow], base_path: str) -> Path:
 def write_json(rows: Sequence[MixedRow], base_path: str) -> Path:
     p = Path(f"{base_path}.json")
     p.parent.mkdir(parents=True, exist_ok=True)
-    with p.open("w", encoding="utf-8") as f:
-        json.dump([{
-            "type": r.kind,
-            "data": r.data.__dict__,
-            "notes": r.notes
-        }], f, indent=2, ensure_ascii=False)
+    payload = [{
+        "type": r.kind,
+        "data": r.data.__dict__,
+        "notes": r.notes
+    } for r in rows]
+    p.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
     return p
