@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Tuple
+from typing import Tuple, Optional
 from rich.console import Console
 from rich.panel import Panel
 from rich.text import Text
@@ -57,7 +57,11 @@ def _badges() -> Text:
     return badges
 
 # ── Public API ────────────────────────────────────────────────────────────────
-def print_banner(version: str= "1.0.0" | None = None, color1: str = "#00d1ff", color2: str = "#7c3aed") -> None:
+def print_banner(
+    version: Optional[str] = None,
+    color1: str = "#00d1ff",
+    color2: str = "#7c3aed",
+) -> None:
     """
     Render the IOC Ranger banner.
     - version: optional string like "1.0.0" (shown in subtitle)
