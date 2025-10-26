@@ -6,6 +6,9 @@ A fast, colorful, and extensible IOC checker for **hashes, IPs, domains, and URL
 - **AbuseIPDB**: IP abuse confidence, reports, last reported time  
 - **IPQualityScore**: IP/Domain/URL risk, **VPN/Proxy/TOR** flags, fraud score
 
+<img width="1092" height="937" alt="image" src="https://github.com/user-attachments/assets/ec52832a-894d-4a64-a048-02fba92e35a1" />
+
+
 ## Quickstart
 
 ```bash
