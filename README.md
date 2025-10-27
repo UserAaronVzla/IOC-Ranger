@@ -93,7 +93,7 @@ CACHE_TTL=86400
 
 ## Social
 - 📧 A.eskenazicohen@gmail.com
-- 💼 [LinkedIn](linkedin.com/in/aaron-eskenazi-vzla)
+- 💼 [LinkedIn](https://linkedin.com/in/aaron-eskenazi-vzla)
 - 🐈‍⬛ [GitHub](https://github.com/UserAaronVzla)
 
 
