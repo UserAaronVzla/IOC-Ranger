@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" /></a>
-  <img src="https://img.shields.io/badge/Python-3.9%2B-blue" />
+  <img src="https://img.shields.io/badge/Python-3.10%2B-blue" />
   <img src="https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-informational" />
   <img src="https://img.shields.io/badge/Status-Active-brightgreen" />
   <a href="#features"><img src="https://github.com/user-attachments/assets/ec52832a-894d-4a64-a048-02fba92e35a1" /></a>
@@ -61,7 +61,9 @@ python -m ioc_ranger -t mixed -i inputs/iocs_mixed.txt -f table
 ## Usage
 ```bash
 python -m ioc_ranger --help
-# Common:
+# Common Interactive:
+python -m ioc_ranger
+# Common Noninteractive:
 python -m ioc_ranger -t hashes -i inputs/hashes.txt -f table csv
 python -m ioc_ranger -t mixed  -i inputs/iocs_mixed.txt -o outputs/results -f table csv json
 ```
