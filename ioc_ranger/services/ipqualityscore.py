@@ -1,13 +1,16 @@
 from __future__ import annotations
+
 import httpx
-from ..ioc_types import IPResult, DomainResult, URLResult
+
+from ..ioc_types import DomainResult, IPResult, URLResult
 
 BASE = "https://ipqualityscore.com/api/json"
+
 
 async def check_ip(client: httpx.AsyncClient, api_key: str, ip: str) -> IPResult:
     url = f"{BASE}/ip/{api_key}/{ip}"
     params = {
-        "strictness": 1,
+        "strictness": "1",
         "allow_public_access_points": "true",
         "mobile": "true",
         "fast": "true",
@@ -28,9 +31,10 @@ async def check_ip(client: httpx.AsyncClient, api_key: str, ip: str) -> IPResult
         country=j.get("country_code") or j.get("country_code_3"),
     )
 
+
 async def check_domain(client: httpx.AsyncClient, api_key: str, domain: str) -> DomainResult:
     url = f"{BASE}/domain/{api_key}/{domain}"
-    params = {"strictness": 1}
+    params = {"strictness": "1"}
     r = await client.get(url, params=params, timeout=30)
     r.raise_for_status()
     j = r.json() or {}
@@ -44,9 +48,10 @@ async def check_domain(client: httpx.AsyncClient, api_key: str, domain: str) -> 
         malware=bool(j.get("malware")),
     )
 
+
 async def check_url(client: httpx.AsyncClient, api_key: str, url: str) -> URLResult:
     u = f"{BASE}/url/{api_key}/{url}"
-    params = {"strictness": 1}
+    params = {"strictness": "1"}
     r = await client.get(u, params=params, timeout=45)
     r.raise_for_status()
     j = r.json() or {}

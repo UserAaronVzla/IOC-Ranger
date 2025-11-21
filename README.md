@@ -5,7 +5,6 @@
   <img src="https://img.shields.io/badge/Python-3.10%2B-blue" />
   <img src="https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-informational" />
   <img src="https://img.shields.io/badge/Status-Active-brightgreen" />
-  <a href="#features"><img src="https://github.com/user-attachments/assets/ec52832a-894d-4a64-a048-02fba92e35a1" /></a>
 </p>
 
 A fast, colorful, and extensible IOC checker for **hashes, IPs, domains, and URLs**.
@@ -13,6 +12,11 @@ A fast, colorful, and extensible IOC checker for **hashes, IPs, domains, and URL
 - **VirusTotal**: file reputation, detections, and **code-signing** info  
 - **AbuseIPDB**: IP abuse confidence, reports, last reported time  
 - **IPQualityScore**: IP/Domain/URL risk, **VPN/Proxy/TOR** flags, fraud score
+- **AlienVault OTX**: Pulse counts and threat intelligence
+- **Shodan**: Open ports and vulnerabilities
+- **GreyNoise**: Internet background noise and riot status
+- **ThreatFox**: Threat confidence and type
+- **URLScan.io**: Page screenshots and risk scores
 
 ## Table of contents
 - [Features](#features)
@@ -25,11 +29,14 @@ A fast, colorful, and extensible IOC checker for **hashes, IPs, domains, and URL
 
 
 ## Features
-- Interactive CLI with colorful banner (Rich)
+- Interactive CLI with colorful banner (Rich) and **Progress Bar**
 - Auto-classify: hashes • IPs • domains • URLs
+- **HTML Reporting**: Generate standalone dashboards
+- **Flexible Inputs**: Pipe from stdin or pass arguments
 - VirusTotal (hash reputation & code-signing)
 - AbuseIPDB (abuse score, last reported)
 - IPQualityScore (risk + VPN/Proxy/TOR flags)
+- AlienVault OTX, Shodan, GreyNoise, ThreatFox, URLScan
 - CSV/JSON tables, simple on-disk caching
 - Windows/macOS/Linux, no secrets committed (.env)
 
@@ -65,7 +72,7 @@ python -m ioc_ranger --help
 python -m ioc_ranger
 # Common Noninteractive:
 python -m ioc_ranger -t hashes -i inputs/hashes.txt -f table csv
-python -m ioc_ranger -t mixed  -i inputs/iocs_mixed.txt -o outputs/results -f table csv json
+python -m ioc_ranger -t mixed  -i inputs/iocs_mixed.txt -o outputs/results -f table csv json html
 ```
 
 
@@ -74,6 +81,11 @@ python -m ioc_ranger -t mixed  -i inputs/iocs_mixed.txt -o outputs/results -f ta
 VT_API_KEY=...
 ABUSEIPDB_API_KEY=...
 IPQS_API_KEY=...
+ALIENVAULT_API_KEY=...
+SHODAN_API_KEY=...
+GREYNOISE_API_KEY=...
+THREATFOX_API_KEY=...
+URLSCAN_API_KEY=...
 CACHE_TTL=86400
 ```
 
@@ -85,8 +97,9 @@ CACHE_TTL=86400
 
 
 ## Roadmap
-- [ ] Progress bar + ETA
-- [ ] JSONL & Markdown/HTML report exports
+- [x] Progress bar + ETA
+- [x] JSONL & Markdown/HTML report exports
+- [x] Expanded OSINT sources
 - [ ] WHOIS + GeoIP enrichment
 - [ ] Delta mode (compare runs)
 - [ ] Windows EXE build (PyInstaller)
@@ -97,6 +110,3 @@ CACHE_TTL=86400
 - 📧 A.eskenazicohen@gmail.com
 - 💼 [LinkedIn](https://linkedin.com/in/aaron-eskenazi-vzla)
 - 🐈‍⬛ [GitHub](https://github.com/UserAaronVzla)
-
-
-

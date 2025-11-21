@@ -1,12 +1,11 @@
 from __future__ import annotations
-from typing import Tuple, Optional
-from rich.console import Console
-from rich.panel import Panel
-from rich.text import Text
+
 from rich.align import Align
 from rich.box import ROUNDED
+from rich.console import Console
+from rich.panel import Panel
 from rich.style import Style
-
+from rich.text import Text
 
 ASCII = r"""
 by Aaron E. (UserAaronVzla)
@@ -23,20 +22,24 @@ by Aaron E. (UserAaronVzla)
                                                                         ░░░░░░                     
                                                                                                    
                                                                                                    
-"""                                                                                                   
+"""
+
+
 # ── Helpers (gradient + badges) ───────────────────────────────────────────────
-def _hex_to_rgb(h: str) -> Tuple[int, int, int]:
+def _hex_to_rgb(h: str) -> tuple[int, int, int]:
     h = h.lstrip("#")
     return int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
 
+
 def _lerp(a: int, b: int, t: float) -> int:
     return int(a + (b - a) * t)
+
 
 def _gradient_text(block: str, c1: str = "#00d1ff", c2: str = "#7c3aed") -> Text:
     start = _hex_to_rgb(c1)
     end = _hex_to_rgb(c2)
     lines = block.splitlines(keepends=True)
-    widest = max((len(l.rstrip("\n")) for l in lines), default=1)
+    widest = max((len(line.rstrip("\n")) for line in lines), default=1)
     out = Text()
     for line in lines:
         core = line.rstrip("\n")
@@ -49,16 +52,18 @@ def _gradient_text(block: str, c1: str = "#00d1ff", c2: str = "#7c3aed") -> Text
         out.append("\n")
     return out
 
+
 def _badges() -> Text:
     badges = Text()
-    badges.append(" VT ", style="bold white on #0ea5e9")            # VirusTotal
-    badges.append("  AbuseIPDB ", style="bold black on #facc15")    # AbuseIPDB
+    badges.append(" VT ", style="bold white on #0ea5e9")  # VirusTotal
+    badges.append("  AbuseIPDB ", style="bold black on #facc15")  # AbuseIPDB
     badges.append("  IPQualityScore ", style="bold white on #22c55e")  # IPQS
     return badges
 
+
 # ── Public API ────────────────────────────────────────────────────────────────
 def print_banner(
-    version: Optional[str] = None,
+    version: str | None = None,
     color1: str = "#00d1ff",
     color2: str = "#7c3aed",
 ) -> None:
@@ -83,5 +88,4 @@ def print_banner(
     )
     console.print(panel)
     console.print(Align.center(_badges()))
-    console.print()  # spacer                                                                                                   
-                                                                                                   
+    console.print()  # spacer

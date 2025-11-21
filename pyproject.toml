@@ -1,0 +1,70 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ioc-ranger"
+version = "0.1.0"
+description = "A fast, colorful, and extensible IOC checker for hashes, IPs, domains, and URLs."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "Aaron Eskenazi", email = "A.eskenazicohen@gmail.com" }
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "typer>=0.12",
+    "rich>=13.7",
+    "httpx>=0.27",
+    "python-dotenv>=1.0",
+    "tldextract>=5.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0",
+    "types-requests",
+    "types-setuptools",
+]
+
+[project.scripts]
+ioc-ranger = "ioc_ranger.cli:app"
+
+[project.urls]
+"Homepage" = "https://github.com/UserAaronVzla/IOC-Ranger"
+"Bug Tracker" = "https://github.com/UserAaronVzla/IOC-Ranger/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ioc_ranger*"]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q"
+testpaths = [
+    "tests",
+]
+pythonpath = [
+    ".",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["B008", "E501"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+check_untyped_defs = true

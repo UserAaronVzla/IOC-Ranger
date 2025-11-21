@@ -1,11 +1,37 @@
 # Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
 .venv/
+pip-log.txt
+pip-delete-this-directory.txt
 .env
+.env.local
+.env.*
 
-# OS junk
-.DS_Store
+# Testing & Linters
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Distribution / Packaging
+dist/
+build/
+*.egg-info/
+.eggs/
+
+# IDEs
+.vscode/
+.idea/
 
 # Project outputs
 outputs/*
+!outputs/.gitkeep
+inputs/*
+!inputs/.gitkeep

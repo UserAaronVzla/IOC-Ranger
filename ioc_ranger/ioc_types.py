@@ -1,7 +1,8 @@
 from dataclasses import dataclass, field
-from typing import Optional, Literal
+from typing import Literal
 
 IOCType = Literal["hash", "ip", "domain", "url"]
+
 
 @dataclass
 class HashResult:
@@ -12,43 +13,65 @@ class HashResult:
     additional_names: int = 0
     flagged_malicious: bool = False
     malicious_vendors: int = 0
-    is_signed: Optional[bool] = None
+    is_signed: bool | None = None
     signers: str = ""
-    signature_valid: Optional[bool] = None
+    signature_valid: bool | None = None
     vt_link: str = ""
+    alienvault_pulses: int = 0
+    threatfox_confidence: int | None = None
+    threatfox_type: str | None = None
+
 
 @dataclass
 class IPResult:
     ioc: str
-    abuse_confidence: Optional[int] = None
-    total_reports: Optional[int] = None
-    last_reported_at: Optional[str] = None
-    country: Optional[str] = None
-    isp: Optional[str] = None
-    org: Optional[str] = None
-    ipqs_fraud_score: Optional[int] = None
-    is_proxy: Optional[bool] = None
-    is_vpn: Optional[bool] = None
-    is_tor: Optional[bool] = None
-    recent_abuse: Optional[bool] = None
+    abuse_confidence: int | None = None
+    total_reports: int | None = None
+    last_reported_at: str | None = None
+    country: str | None = None
+    isp: str | None = None
+    org: str | None = None
+    ipqs_fraud_score: int | None = None
+    is_proxy: bool | None = None
+    is_vpn: bool | None = None
+    is_tor: bool | None = None
+    recent_abuse: bool | None = None
+    alienvault_pulses: int = 0
+    shodan_ports: list[int] = field(default_factory=list)
+    shodan_vulns: list[str] = field(default_factory=list)
+    greynoise_riot: bool | None = None
+    greynoise_noise: bool | None = None
+    greynoise_class: str | None = None
+    threatfox_confidence: int | None = None
+    threatfox_type: str | None = None
+
 
 @dataclass
 class DomainResult:
     ioc: str
-    ipqs_suspicious: Optional[bool] = None
-    ipqs_risk_score: Optional[int] = None
-    parking: Optional[bool] = None
-    spamming: Optional[bool] = None
-    malware: Optional[bool] = None
+    ipqs_suspicious: bool | None = None
+    ipqs_risk_score: int | None = None
+    parking: bool | None = None
+    spamming: bool | None = None
+    malware: bool | None = None
+    alienvault_pulses: int = 0
+    threatfox_confidence: int | None = None
+    threatfox_type: str | None = None
+
 
 @dataclass
 class URLResult:
     ioc: str
-    ipqs_suspicious: Optional[bool] = None
-    ipqs_risk_score: Optional[int] = None
-    phishing: Optional[bool] = None
-    malware: Optional[bool] = None
-    shortened: Optional[bool] = None
+    ipqs_suspicious: bool | None = None
+    ipqs_risk_score: int | None = None
+    phishing: bool | None = None
+    malware: bool | None = None
+    shortened: bool | None = None
+    alienvault_pulses: int = 0
+    urlscan_uuid: str | None = None
+    urlscan_score: int | None = None
+    urlscan_screenshot: str | None = None
+
 
 @dataclass
 class MixedRow:

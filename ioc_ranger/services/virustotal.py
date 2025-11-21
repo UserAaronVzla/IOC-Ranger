@@ -1,11 +1,13 @@
 from __future__ import annotations
+
 import httpx
-from typing import Optional, Tuple
+
 from ..ioc_types import HashResult
 
 BASE = "https://www.virustotal.com/api/v3"
 
-def _pick_primary_name(attrs: dict) -> Tuple[str, int]:
+
+def _pick_primary_name(attrs: dict) -> tuple[str, int]:
     primary = attrs.get("meaningful_name") or ""
     names = attrs.get("names") or []
     if not primary and names:
@@ -13,32 +15,41 @@ def _pick_primary_name(attrs: dict) -> Tuple[str, int]:
     add_count = len({str(n) for n in names if n} - ({primary} if primary else set()))
     return primary, add_count
 
-def _extract_signature(attrs: dict) -> Tuple[Optional[bool], str, Optional[bool]]:
+
+def _extract_signature(attrs: dict) -> tuple[bool | None, str, bool | None]:
     signers = []
     valid = None
     sig = attrs.get("signature_info") or {}
     if isinstance(sig, dict):
         for k in ("signers", "signer"):
             v = sig.get(k)
-            if isinstance(v, list): signers += [s for s in v if s]
-            elif isinstance(v, str) and v: signers.append(v)
+            if isinstance(v, list):
+                signers += [s for s in v if s]
+            elif isinstance(v, str) and v:
+                signers.append(v)
         for k in ("publisher", "subject", "issuer", "company_name"):
             v = sig.get(k)
-            if isinstance(v, str) and v: signers.append(v)
-        if "valid" in sig: valid = bool(sig["valid"])
-        elif "verified" in sig: valid = bool(sig["verified"])
+            if isinstance(v, str) and v:
+                signers.append(v)
+        if "valid" in sig:
+            valid = bool(sig["valid"])
+        elif "verified" in sig:
+            valid = bool(sig["verified"])
 
     pe = attrs.get("pe_info") or {}
     cert = pe.get("certificate") if isinstance(pe, dict) else None
     if isinstance(cert, dict):
         for k in ("subject", "issuer", "publisher"):
             v = cert.get(k)
-            if isinstance(v, str) and v: signers.append(v)
-        if valid is None and "valid" in cert: valid = bool(cert["valid"])
+            if isinstance(v, str) and v:
+                signers.append(v)
+        if valid is None and "valid" in cert:
+            valid = bool(cert["valid"])
 
     signers = list(dict.fromkeys([s for s in signers if str(s).strip().lower() != "unsigned"]))
     is_signed = None if not signers else True
     return is_signed, ", ".join(signers) if signers else "", valid
+
 
 async def get_hash_info(client: httpx.AsyncClient, api_key: str, h: str) -> HashResult:
     headers = {"x-apikey": api_key}
